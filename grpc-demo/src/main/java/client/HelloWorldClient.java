@@ -18,7 +18,7 @@ public class HelloWorldClient {
 
     public HelloWorldClient(String host,int port){
         channel = ManagedChannelBuilder.forAddress(host,port)
-                .usePlaintext(true)
+                .usePlaintext()
                 .build();
 
         blockingStub = GreeterGrpc.newBlockingStub(channel);
@@ -30,7 +30,7 @@ public class HelloWorldClient {
     }
 
     public  void greet(String name){
-        HelloRequest request = HelloRequest.newBuilder().setName(name).build();
+        HelloRequest request = HelloRequest.newBuilder().setName(name).setValue("哈哈request").build();
         HelloReply response;
         try{
             response = blockingStub.sayHello(request);

@@ -28,9 +28,9 @@ public class HelloWorldServer {
             @Override
             public void run() {
 
-                System.err.println("*** shutting down gRPC server since JVM is shutting down");
+                logger.info(" shutting down gRPC server since JVM is shutting down");
                 HelloWorldServer.this.stop();
-                System.err.println("*** server shut down");
+                logger.info("*** server shut down");
             }
         });
     }
@@ -58,11 +58,11 @@ public class HelloWorldServer {
     private class GreeterImpl extends GreeterGrpc.GreeterImplBase {
         @Override
         public void sayHello(HelloRequest req, StreamObserver<HelloReply> responseObserver) {
-            HelloReply reply = HelloReply.newBuilder().setMessage(("Hello " + req.getName())).build();
+            HelloReply reply = HelloReply.newBuilder().setMessage(("Hello " + req.getName() + " , " + req.getValue())).build();
             responseObserver.onNext(reply);
             responseObserver.onCompleted();
-            System.out.println("Message from gRPC-Client:" + req.getName());
-            System.out.println("Message Response:" + reply.getMessage());
+            logger.info("Message from gRPC-Client:" + req.getName() + " , " + req.getValue());
+            logger.info("Message Response:" + reply.getMessage());
         }
     }
 }
